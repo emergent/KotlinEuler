@@ -20,12 +20,18 @@ class MainActivity : AppCompatActivity() {
     fun p001(view: View) { updateAnswer(1) }
     fun p002(view: View) { updateAnswer(2) }
     fun p003(view: View) { updateAnswer(3) }
+    fun p004(view: View) { updateAnswer(4) }
+    fun p005(view: View) { updateAnswer(5) }
+    fun p006(view: View) { updateAnswer(6) }
 
     fun solve(num: Int): String {
         return when (num) {
             1 -> problem001()
             2 -> problem002()
             3 -> problem003()
+            4 -> problem004()
+            5 -> problem005()
+            6 -> problem006()
             else -> "error"
         }.toString()
     }
@@ -74,5 +80,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         return maxprimefactor(600851475143)
+    }
+
+    fun problem004(): Int {
+        fun isPalindromic(x: Int): Boolean {
+            return x.toString().reversed() == x.toString()
+        }
+        val pmax = (100..1000).map { i ->
+            (i..1000).map { j -> i * j }
+        }
+            .flatten()
+            .distinct()
+            .filter { isPalindromic(it) }
+            .max() ?: 0
+
+        return pmax
+    }
+
+    fun problem005(): Long {
+        fun gcd(x: Long, y: Long): Long {
+            return if (x == 0L) { y } else { gcd(y % x, x) }
+        }
+
+        fun lcm(x: Long, y: Long): Long {
+            return x * y / gcd(x, y)
+        }
+
+        return (1L..20).fold(1L, { x, y -> lcm(x, y) })
+    }
+
+    fun problem006(): Int {
+        val limit = 100;
+        val sum = (1 + limit) * limit / 2
+        val sumsq = sum * sum
+        val sqsum = (1..limit).map { it * it }.sum()
+        return sumsq - sqsum
     }
 }
